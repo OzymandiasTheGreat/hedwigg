@@ -1,19 +1,27 @@
 {
   "name": "hedwigg",
-  "version": "0.0.0",
-  "scripts": {
-    "android": "tns run android",
-    "ios": "tns run ios",
-    "mobile": "tns run",
-    "preview": "tns preview",
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+  "version": "0.1.0-a0",
+  "author": {
+    "name": "Ozymandias (Tomas Ravinskas)",
+    "email": "tomas.rav@gmail.com"
   },
+  "description": "A simple, cross-platform E-Book reader",
+  "license": "MIT",
+  "main": "dist/main.electron.js",
   "private": true,
+  "scripts": {
+    "electron": "wait-on http://localhost:4213/ && npm run electron:tsc && electron . --serve",
+    "electron:tsc": "tsc -p tsconfig.electron.json",
+    "tns": "tns",
+    "ng": "ng",
+    "serve": "ng serve",
+    "start": "npm-run-all -p -r --silent serve electron",
+    "start:android": "tns run android",
+    "start:ios": "tns run ios",
+    "build:ng": "ng build -c production",
+    "build": "npm-run-all -s --silent electron:tsc build:ng",
+    "dist": "npm run build && electron-builder build --linux --windows"
+  },
   "dependencies": {
     "nativescript-angular": "~8.20.0",
     "@nativescript/theme": "~2.2.1",
@@ -28,26 +36,48 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
-    "@nativescript/schematics": "^1.0.0",
     "rxjs": "~6.4.0",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "nativescript-dev-webpack": "~1.4.0",
-    "@nativescript/schematics": "~1.0.0",
-    "@nativescript/tslint-rules": "~0.0.5",
     "@angular-devkit/build-angular": "~0.803.25",
     "@angular/cli": "~8.3.25",
     "@angular/compiler-cli": "~8.2.14",
     "@angular/language-service": "~8.2.14",
+    "@nativescript/schematics": "~1.0.0",
+    "@nativescript/tslint-rules": "~0.0.5",
     "@types/node": "~8.9.4",
+    "better-npm-run": "^0.1.1",
     "codelyzer": "^5.0.0",
+    "electron": "^8.1.1",
+    "electron-builder": "^22.4.1",
+    "nativescript-dev-webpack": "~1.4.0",
+    "npm-run-all": "^4.1.5",
+    "rxjs-tslint-rules": "^4.29.1",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.5.3"
+    "typescript": "~3.5.3",
+    "wait-on": "^4.0.1"
+  },
+  "build": {
+    "appId": "tk.ozymandias.hedwigg",
+    "productName": "Hedwigg",
+    "win": {
+      "icon": "build_resources/icons/windows.ico"
+    },
+    "linux": {
+      "icon": "build_resources/icons/linux"
+    },
+    "files": [
+      "dist/main.electron.js",
+      {
+        "from": "dist/hedwigg",
+        "to": "dist"
+      }
+    ]
   },
   "nativescript": {
-    "id": "org.nativescript.ngsample",
+    "id": "tk.ozymandias.hedwigg",
     "tns-android": {
       "version": "6.4.1"
     }
