@@ -20,7 +20,11 @@
     "start:ios": "tns run ios",
     "build:ng": "ng build -c production",
     "build": "npm-run-all -s --silent electron:tsc build:ng",
-    "dist": "npm run build && electron-builder build --linux --windows"
+    "dist": "npm run build && electron-builder build --linux --windows",
+    "dist:android": "bnr dist:android"
+  },
+  "betterScripts": {
+    "dist:android": "tns deploy android --key-store-path \"$JKS_PATH\" --key-store-password \"$JKS_PASS\" --key-store-alias \"$JKS_ALIAS\" --key-store-alias-password \"$JKS_PASS\" --clean --release --env.aot --env.snapshot"
   },
   "dependencies": {
     "nativescript-angular": "~8.20.0",
