@@ -16,9 +16,10 @@
     "ng": "ng",
     "serve": "ng serve",
     "start": "npm-run-all -p -r --silent serve electron",
-    "start:android": "tns run android",
+    "start:android": "npm run build:webview && tns run android",
     "start:ios": "tns run ios",
     "build:ng": "ng build -c production",
+    "build:webview": "tsc src/app/webview/reader.ts",
     "build": "npm-run-all -s --silent electron:tsc build:ng",
     "dist": "npm run build && electron-builder build --linux --windows",
     "dist:android": "bnr dist:android"
@@ -27,11 +28,6 @@
     "dist:android": "tns deploy android --key-store-path \"$JKS_PATH\" --key-store-password \"$JKS_PASS\" --key-store-alias \"$JKS_ALIAS\" --key-store-alias-password \"$JKS_PASS\" --clean --release --env.aot --env.snapshot"
   },
   "dependencies": {
-    "nativescript-angular": "~8.20.0",
-    "@nativescript/theme": "~2.2.1",
-    "reflect-metadata": "~0.1.12",
-    "tns-core-modules": "~6.3.0",
-    "tslib": "^1.10.0",
     "@angular/animations": "~8.2.14",
     "@angular/common": "~8.2.14",
     "@angular/compiler": "~8.2.14",
@@ -40,7 +36,18 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
+    "@nativescript/theme": "~2.2.1",
+    "epubjs": "^0.3.85",
+    "hammerjs": "^2.0.8",
+    "jszip": "^3.2.2",
+    "nativescript-angular": "~8.20.0",
+    "nativescript-mediafilepicker": "^3.0.1",
+    "nativescript-permissions": "^1.3.8",
+    "nativescript-webview-interface": "^1.4.3",
+    "reflect-metadata": "~0.1.12",
     "rxjs": "~6.4.0",
+    "tns-core-modules": "~6.3.0",
+    "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {

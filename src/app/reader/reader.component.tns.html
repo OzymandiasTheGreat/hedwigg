@@ -1,0 +1,4 @@
+<DockLayout stretchLastChild="true">
+	<Button dock="bottom" text="Open" [visibility]="fullscreen ? 'collapsed' : 'visible'" (tap)="openBook()"></Button>
+	<WebView #wv (swipe)="onSwipe($event)"></WebView>
+</DockLayout>
