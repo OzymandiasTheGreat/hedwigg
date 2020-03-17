@@ -2,7 +2,13 @@
 import { platformNativeScriptDynamic } from "nativescript-angular/platform";
 
 import { AppModule } from "@src/app/app.module";
+import { registerElement } from "nativescript-angular/element-registry";
 
+import { Fab } from "@nstudio/nativescript-floatingactionbutton";
+
+
+// Custom elements
+registerElement("Fab", () => Fab);
 
 // A traditional NativeScript application starts by initializing global objects,
 // setting up global CSS rules, creating, and navigating to the main page.

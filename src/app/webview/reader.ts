@@ -1,5 +1,8 @@
+import { ePub } from "epubjs/src";
+
+
 const wvInterface = (<any> window).nsWebViewInterface;
-const ePub = (<any> window).ePub;
+const ePub = (<ePub> window).ePub;
 
 let rendition;
 

@@ -1,0 +1,24 @@
+<ActionBar [title]="activeLink.title" class="navbar">
+	<NavigationButton class="mdi" icon="font://󰍜" (tap)="sidebar.sideDrawer.toggleDrawerState()"></NavigationButton>
+</ActionBar>
+
+<RadSideDrawer #sidebar>
+	<DockLayout tkDrawerContent class="sidebar" stretchLastChild="true">
+		<StackLayout dock="top" class="sidebar-title">
+			<Image src="res://logo" decodeHeight="128" decodeWidth="128"></Image>
+			<Label text="Hedwigg"></Label>
+		</StackLayout>
+		<RadListView [items]="navlinks">
+			<ng-template tkListItemTemplate let-link="item">
+				<DockLayout class="navlink" [nsRouterLink]="[link.link]" nsRouterLinkActive="active" stretchLastChild="true">
+					<Image dock="left" class="mdi" [src]="link.icon"></Image>
+					<Label [text]="link.title"></Label>
+				</DockLayout>
+			</ng-template>
+		</RadListView>
+	</DockLayout>
+
+	<StackLayout tkMainContent>
+		<page-router-outlet actionBarVisibility="never"></page-router-outlet>
+	</StackLayout>
+</RadSideDrawer>

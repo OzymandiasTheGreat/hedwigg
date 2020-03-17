@@ -1,0 +1,30 @@
+.sidebar {
+	.sidebar-title {
+		Image {
+			width: 128;
+			height: 128;
+		}
+
+		Label {
+			font-size: 32;
+			font-weight: bold;
+			margin: 0 0 15 25;
+		}
+	}
+
+	.navlink {
+		Image {
+			font-size: 24;
+			width: 32;
+			height: 32;
+			margin: 0 15 15 25;
+			vertical-align: center;
+		}
+
+		Label {
+			font-size: 24;
+			line-height: 32;
+			vertical-align: center;
+		}
+	}
+}
