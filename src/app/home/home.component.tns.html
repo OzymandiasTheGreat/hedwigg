@@ -1,4 +1,58 @@
-<GridLayout class="layout" rows="*, *">
-	<Button row="0" text="home works!" class="btn btn-primary"></Button>
-	<FAB class="mdi open-button" row="1" text="󰂽" (tap)="openBook()"></FAB>
+<GridLayout class="wrapper" rows="*">
+	<ScrollView>
+		<GridLayout class="layout" rows="auto, auto, auto">
+			<StackLayout *ngIf="starred.length" row="0">
+				<Label class="category-label" text="Starred" textWrap="false"></Label>
+				<RadListView class="category" [items]="starred" height="342">
+					<ListViewLinearLayout tkListViewLayout scrollDirection="Horizontal"></ListViewLinearLayout>
+					<ng-template tkListItemTemplate let-book="item">
+						<CardView class="book-card" ripple="true">
+							<GridLayout rows="32, 24, 256">
+								<Label row="0" class="book-title" [text]="book.title" textWrap="false" [nsRouterLink]="['/reader']" [queryParams]="{ path: book.path }"></Label>
+								<Label row="1" class="book-author" [text]="book.author" textWrap="false" [nsRouterLink]="['/reader']" [queryParams]="{ path: book.path }"></Label>
+								<Image row="2" class="book-cover" [src]="book.cover" stretch="aspectFit" [nsRouterLink]="['/reader']" [queryParams]="{ path: book.path }"></Image>
+								<Button row="2" class="mdi star" [text]="book.starred ? '󰓎' : '󰓒'" (tap)="star(book)"></Button>
+								<Button row="2" #menu class="mdi menu" text="󰇙" (tap)="openMenu(book, menu, true)"></Button>
+							</GridLayout>
+						</CardView>
+					</ng-template>
+				</RadListView>
+			</StackLayout>
+			<StackLayout *ngIf="recent.length" row="1">
+				<Label class="category-label" text="Recent" textWrap="false"></Label>
+				<RadListView class="category" [items]="recent" height="342">
+					<ListViewLinearLayout tkListViewLayout scrollDirection="Horizontal"></ListViewLinearLayout>
+					<ng-template tkListItemTemplate let-book="item">
+						<CardView class="book-card" ripple="true">
+							<GridLayout rows="32, 24, 256">
+								<Label row="0" class="book-title" [text]="book.title" textWrap="false" [nsRouterLink]="['/reader']" [queryParams]="{ path: book.path }"></Label>
+								<Label row="1" class="book-author" [text]="book.author" textWrap="false" [nsRouterLink]="['/reader']" [queryParams]="{ path: book.path }"></Label>
+								<Image row="2" class="book-cover" [src]="book.cover" stretch="aspectFit" [nsRouterLink]="['/reader']" [queryParams]="{ path: book.path }"></Image>
+								<Button row="2" class="mdi star" [text]="book.starred ? '󰓎' : '󰓒'" (tap)="star(book)"></Button>
+								<Button row="2" #menu class="mdi menu" text="󰇙" (tap)="openMenu(book, menu, true)"></Button>
+							</GridLayout>
+						</CardView>
+					</ng-template>
+				</RadListView>
+			</StackLayout>
+			<StackLayout *ngIf="finished.length" row="2">
+				<Label class="category-label" text="Finished" textWrap="false"></Label>
+				<RadListView class="category" [items]="finished" height="342">
+					<ListViewLinearLayout tkListViewLayout scrollDirection="Horizontal"></ListViewLinearLayout>
+					<ng-template tkListItemTemplate let-book="item">
+						<CardView class="book-card" ripple="true">
+							<GridLayout rows="32, 24, 256">
+								<Label row="0" class="book-title" [text]="book.title" textWrap="false" [nsRouterLink]="['/reader']" [queryParams]="{ path: book.path }"></Label>
+								<Label row="1" class="book-author" [text]="book.author" textWrap="false" [nsRouterLink]="['/reader']" [queryParams]="{ path: book.path }"></Label>
+								<Image row="2" class="book-cover" [src]="book.cover" stretch="aspectFit" [nsRouterLink]="['/reader']" [queryParams]="{ path: book.path }"></Image>
+								<Button row="2" class="mdi star" [text]="book.starred ? '󰓎' : '󰓒'" (tap)="star(book)"></Button>
+								<Button row="2" #menu class="mdi menu" text="󰇙" (tap)="openMenu(book, menu, false)"></Button>
+							</GridLayout>
+						</CardView>
+					</ng-template>
+				</RadListView>
+			</StackLayout>
+		</GridLayout>
+	</ScrollView>
+	<FAB class="mdi open-button" text="󰂽" (tap)="openBook()"></FAB>
 </GridLayout>

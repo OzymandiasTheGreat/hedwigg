@@ -1,0 +1,36 @@
+<GridLayout rows="*">
+	<RadListView row="0"
+		[items]="feed.entries"
+		[itemTemplateSelector]="templateSelector"
+		loadOnDemandMode="Auto"
+		loadOnDemandBufferSize="5"
+		(loadMoreDataRequested)="nextPage($event)"
+	>
+		<ng-template tkTemplateKey="navigation" let-entry="item">
+			<CardView class="nav-card">
+				<GridLayout rows="*, *" columns="106, *" [nsRouterLink]="['./']" [queryParams]="{ feed: getEntryLink(entry) }">
+					<Image row="0" col="0" rowSpan="2" class="mdi nav-img" src="font://󱉟"></Image>
+					<Label row="0" col='1' class="nav-title" [text]="entry.title" textWrap="false"></Label>
+					<Label row="1" col="1" class="nav-desc" maxLines="3" [text]="entry.content || entry.summary" textWrap="true"></Label>
+				</GridLayout>
+			</CardView>
+		</ng-template>
+
+		<ng-template tkTemplateKey="acquisition" let-entry="item">
+			<CardView class="book-card">
+				<GridLayout rows="*, *, *" columns="auto, *" (tap)="openDetails(entry)">
+					<Image row="0" col="0" rowSpan="3" class="mdi fallback-img" src="font://󰗚"></Image>
+					<ImageCacheIt row="0" col="0" rowSpan="3" class="mdi book-cover"
+						[headers]="headers"
+						stretch="aspectFit" decodedWidth="96" decodedHeight="128"
+						[src]="getEntryThumb(entry)"
+					></ImageCacheIt>
+					<Label row="0" col="1" class="book-title" [text]="entry.title" textWrap="false"></Label>
+					<Label row="1" col="1" class="book-author" maxLines="1" [text]="getEntryAuthors(entry)" textWrap="true"></Label>
+					<Label row="2" col="1" class="book-desc" maxLines="2" [text]="entry.content || entry.summary" textWrap="true"></Label>
+				</GridLayout>
+			</CardView>
+		</ng-template>
+	</RadListView>
+	<ActivityIndicator class="spinner" row="0" [busy]="loading"></ActivityIndicator>
+</GridLayout>

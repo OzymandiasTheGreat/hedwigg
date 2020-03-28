@@ -5,10 +5,15 @@ import { AppModule } from "@src/app/app.module";
 import { registerElement } from "nativescript-angular/element-registry";
 
 import { Fab } from "@nstudio/nativescript-floatingactionbutton";
+import { CardView } from "@nstudio/nativescript-cardview";
+import { ImageCacheIt } from "nativescript-image-cache-it";
 
 
 // Custom elements
 registerElement("Fab", () => Fab);
+registerElement("CardView", () => CardView);
+ImageCacheIt.enableAutoMM();
+
 
 // A traditional NativeScript application starts by initializing global objects,
 // setting up global CSS rules, creating, and navigating to the main page.

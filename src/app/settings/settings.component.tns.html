@@ -1,1 +1,44 @@
-<Button text="settings works!" class="btn btn-primary"></Button>
+<ScrollView>
+	<StackLayout class="layout">
+		<StackLayout class="row-layout">
+			<Label text="Flow" textWrap="false"></Label>
+			<ScrollView orientation="horizontal">
+				<StackLayout class="button-layout" orientation="horizontal">
+					<Button [ngClass]="{'-primary': settings.prefs.flow === 'paginated'}" text="Paginated" (tap)="setFlow('paginated')"></Button>
+					<Button [ngClass]="{'-primary': settings.prefs.flow === 'spread'}" text="Spread" (tap)="setFlow('spread')"></Button>
+					<Button [ngClass]="{'-primary': settings.prefs.flow === 'scrolled'}" text="Scrolled" (tap)="setFlow('scrolled')"></Button>
+				</StackLayout>
+			</ScrollView>
+		</StackLayout>
+
+		<StackLayout class="row-layout">
+			<Label text="Reader Theme" textWrap="false"></Label>
+			<ScrollView orientation="horizontal">
+				<StackLayout class="theme-button-layout" orientation="horizontal">
+					<Button *ngFor="let theme of themes" [ngClass]="{'-outline': settings.prefs.theme === theme[0]}" [ngStyle]="{'background-color': theme[1]['html, body']['background-color'], color: theme[1]['html, body'].color}" [text]="theme[0]" (tap)="setTheme(theme[0])"></Button>
+				</StackLayout>
+			</ScrollView>
+		</StackLayout>
+
+		<StackLayout class="row-layout">
+			<Label [text]="'Font Size:\t' + fontSize + '%'" textWrap="true"></Label>
+			<Slider minValue="75" maxValue="200" [value]="fontSize" (valueChange)="setFontSize($event.value)"></Slider>
+		</StackLayout>
+
+		<StackLayout class="row-layout">
+			<Label text="Web Lookup Language" textWrap="false"></Label>
+			<Button class="full-width" [text]="language" (tap)="selectLang()"></Button>
+		</StackLayout>
+
+		<StackLayout class="row-layout">
+			<Label text="App Theme" textWrap="false"></Label>
+			<ScrollView orientation="horizontal">
+				<StackLayout class="button-layout" orientation="horizontal">
+					<Button [ngClass]="{'-primary': settings.prefs.appTheme === 'Auto'}" text="System" (tap)="setAppTheme('Auto')"></Button>
+					<Button [ngClass]="{'-primary': settings.prefs.appTheme === 'Light'}" text="Light" (tap)="setAppTheme('Light')"></Button>
+					<Button [ngClass]="{'-primary': settings.prefs.appTheme === 'Dark'}" text="Dark" (tap)="setAppTheme('Dark')"></Button>
+				</StackLayout>
+			</ScrollView>
+		</StackLayout>
+	</StackLayout>
+</ScrollView>

@@ -1,4 +1,55 @@
-<DockLayout stretchLastChild="true">
-	<Button dock="bottom" text="Open" [visibility]="fullscreen ? 'collapsed' : 'visible'" (tap)="openBook()"></Button>
-	<WebView #wv (swipe)="onSwipe($event)"></WebView>
-</DockLayout>
+<ActionBar [title]="book ? book.title : bookPath.split('/').pop()">
+	<NavigationButton class="mdi" icon="font://󰍜" (tap)="drawer.sideDrawer.toggleDrawerState()"></NavigationButton>
+	<ActionItem class="mdi" [visibility]="searching ? 'collapsed' : 'visible'" [icon]="bookmarked ? 'font://󰃀' : 'font://󰃃'" (tap)="bookmark()"></ActionItem>
+	<ActionItem class="mdi" [visibility]="searching ? 'collapsed' : 'visible'" icon="font://󰍉" (tap)="search()"></ActionItem>
+	<ActionItem [visibility]="searching ? 'visible' : 'collapsed'">
+		<SearchBar #searchbar class="search" hint="Search..." (clear)="onSearchClear()" (submit)="onSearchSubmit(searchbar)"></SearchBar>
+	</ActionItem>
+</ActionBar>
+<RadSideDrawer #drawer>
+	<Tabs tkDrawerContent class="tabs">
+		<TabStrip>
+			<TabStripItem>
+				<Label class="tab-label" text="Table of Contents"></Label>
+				<Image class="mdi" src="font://󰠶"></Image>
+			</TabStripItem>
+			<TabStripItem>
+				<Label class="tab-label" text="Bookmarks"></Label>
+				<Image class="mdi" src="font://󰸕"></Image>
+			</TabStripItem>
+		</TabStrip>
+
+		<TabContentItem>
+			<StackLayout>
+				<ListView height="100%" [items]="toc" [itemTemplateSelector]="TOCSelector">
+					<ng-template nsTemplateKey="TOC" let-item="item" let-i="index">
+						<Label class="toc-label" [text]="item.label.trim()" (tap)="navigateTOC(item.href)" textWrap="false"></Label>
+					</ng-template>
+					<ng-template nsTemplateKey="OUTLINE" let-item="item" let-i="index">
+						<Label class="toc-label" [text]="item.title" (tap)="navigateOutline(item.dest)"></Label>
+					</ng-template>
+				</ListView>
+			</StackLayout>
+		</TabContentItem>
+		<TabContentItem>
+			<StackLayout>
+				<ListView height="100%" [items]="book ? book.bookmarks : []">
+					<ng-template let-bookmark="item">
+						<Label class="toc-label" [text]="bookmark.label" (tap)="navigateTOC(bookmark.cfi)" textWrap="false"></Label>
+					</ng-template>
+				</ListView>
+			</StackLayout>
+		</TabContentItem>
+	</Tabs>
+
+	<DockLayout tkMainContent stretchLastChild="true">
+		<StackLayout dock="bottom" [visibility]="fullscreen ? 'collapsed' : 'visible'" dock="bottom">
+			<FlexboxLayout class="chapter-layout">
+				<Label class="chapter" [text]="chapter.label + '   -   ' + chapter.current + '/' + chapter.total" textWrap="false"></Label>
+				<Label class="mdi settings" text="󰒓" [nsRouterLink]="['/settings']"></Label>
+			</FlexboxLayout>
+			<Slider minValue="1" maxValue="1000" [value]="pageSliderValue * 1000" (valueChange)="onPageSliderValueChange($event.value / 1000)" (touch)="onPageSliderTouch($event)"></Slider>
+		</StackLayout>
+		<WebView #wv (swipe)="onSwipe($event)" (tap)="onTap($event)"></WebView>
+	</DockLayout>
+</RadSideDrawer>

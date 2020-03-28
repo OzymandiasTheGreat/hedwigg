@@ -1,0 +1,15 @@
+<GridLayout rows="*, 56" columns="*, *">
+	<RadDataForm row="0" col="0" colSpan="2" [source]="catalog">
+		<TKEntityProperty tkDataFormProperty name="id" hidden="true"></TKEntityProperty>
+		<TKEntityProperty tkDataFormProperty name="name" displayName="Name"></TKEntityProperty>
+		<TKEntityProperty tkDataFormProperty name="url" displayName="Feed URL"></TKEntityProperty>
+		<TKPropertyGroup tkDataFormGroups name="Authorization" collapsible="true" collapsed="true" hidden="false">
+			<TKEntityProperty tkPropertyGroupProperties name="username" displayName="Username"></TKEntityProperty>
+			<TKEntityProperty tkPropertyGroupProperties name="password" displayName="Password">
+				<TKPropertyEditor tkEntityPropertyEditor type="Password"></TKPropertyEditor>
+			</TKEntityProperty>
+		</TKPropertyGroup>
+	</RadDataForm>
+	<Button row="1" col="0" text="Cancel" (tap)="cancel()"></Button>
+	<Button row="1" col="1" text="Save" (tap)="save()"></Button>
+</GridLayout>

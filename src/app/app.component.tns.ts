@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { Theme } from "@nativescript/theme";
 
 @Component({
 	selector: "app-root",
@@ -7,7 +6,5 @@ import { Theme } from "@nativescript/theme";
 })
 
 export class AppComponent {
-	constructor() {
-		Theme.setMode(Theme.Light);
-	}
+	constructor() { }
 }

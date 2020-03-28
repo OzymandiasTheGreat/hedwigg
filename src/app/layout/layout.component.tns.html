@@ -10,7 +10,12 @@
 		</StackLayout>
 		<RadListView [items]="navlinks">
 			<ng-template tkListItemTemplate let-link="item">
-				<DockLayout class="navlink" [nsRouterLink]="[link.link]" nsRouterLinkActive="active" stretchLastChild="true">
+				<DockLayout class="navlink"
+					[nsRouterLink]="[link.link]"
+					nsRouterLinkActive="active"
+					(tap)="sidebar.sideDrawer.closeDrawer()"
+					stretchLastChild="true"
+				>
 					<Image dock="left" class="mdi" [src]="link.icon"></Image>
 					<Label [text]="link.title"></Label>
 				</DockLayout>

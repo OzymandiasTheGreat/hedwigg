@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<script defer src="./nativescript-webview-interface.js"></script>
+	<script defer src="./build/pdf.js"></script>
+	<script defer src="./web/pdf_viewer.js"></script>
+	<script defer src="./reader.pdf.tns.js"></script>
+
+	<link rel="stylesheet" href="./web/pdf_viewer.css">
+
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+
+		html, body {
+			height: 100%;
+			width: 100%;
+			overflow: hidden;
+		}
+
+		#viewerContainer {
+			position: absolute;
+			overflow: auto;
+			width: 100%;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+		}
+
+		canvas {
+			margin: auto;
+			display: block;
+		}
+
+		.hidden {
+			display: none;
+		}
+
+		[hidden] {
+			display: none !important;
+		}
+	</style>
+</head>
+<body>
+	<div id="viewerContainer">
+		<div id="viewer" class="pdfViewer"></div>
+	</div>
+	<div class="hidden" hidden>
+		<canvas id="renderArea" class="hidden" hidden></canvas>
+	</div>
+</body>
+</html>

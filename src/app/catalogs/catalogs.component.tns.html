@@ -1,1 +1,13 @@
-<Button text="catalogs works!" class="btn btn-primary"></Button>
+<GridLayout rows="*">
+	<ListView row="0" height="100%" [items]="catalogs">
+		<ng-template let-catalog="item">
+			<GridLayout class="feed" rows="auto, auto" columns="auto, *, auto">
+				<Image class="mdi feed-icon" row="0" col="0" rowSpan="2" src="font://󰑬" [nsRouterLink]="['/feed', catalog.id]"></Image>
+				<Label class="feed-name" row="0" col="1" [text]="catalog.name" textWrap="false" [nsRouterLink]="['/feed', catalog.id]"></Label>
+				<Label class="fedd-link" row="1" col="1" [text]="catalog.url" textWrap="false" [nsRouterLink]="['/feed', catalog.id]"></Label>
+				<Button #menu class="mdi menu-button" row="1" col="2" text="󰇙" (tap)="openMenu(catalog, menu)"></Button>
+			</GridLayout>
+		</ng-template>
+	</ListView>
+	<FAB class="mdi add-button" text="󰑫" (tap)="edit(null)"></FAB>
+</GridLayout>

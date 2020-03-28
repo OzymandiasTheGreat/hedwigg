@@ -9,6 +9,7 @@ import { HomeComponent } from "@src/app/home/home.component";
 import { LibraryComponent } from "@src/app/library/library.component";
 import { CatalogsComponent } from "@src/app/catalogs/catalogs.component";
 import { SettingsComponent } from "@src/app/settings/settings.component";
+import { FeedComponent } from "@src/app/feed/feed.component";
 
 export const routes: Routes = [
 	{
@@ -36,7 +37,15 @@ export const routes: Routes = [
 				path: "settings",
 				component: SettingsComponent,
 			},
+			{
+				path: "feed/:catalogId",
+				component: FeedComponent,
+			},
 		],
+	},
+	{
+		path: "reader",
+		component: ReaderComponent,
 	},
 ];
 

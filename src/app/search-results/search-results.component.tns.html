@@ -1,0 +1,11 @@
+<StackLayout (loaded)="onLoaded()">
+	<StackLayout class="header" orientation="horizontal">
+		<Image class="mdi icon" src="font://󰍉"></Image>
+		<Label class="title" [text]="title" textWrap="false"></Label>
+	</StackLayout>
+	<ListView height="100%" [items]="results">
+		<ng-template let-result="item" let-i="index">
+			<Label class="result" [text]="i + 1 + '. ' + result.excerpt" (tap)="onSelect(result.cfi)" textWrap="true"></Label>
+		</ng-template>
+	</ListView>
+</StackLayout>

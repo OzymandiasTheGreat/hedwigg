@@ -1,1 +1,60 @@
-/* Add mobile styles for the component here.  */
+.open-button {
+	width: 70;
+	height: 70;
+	font-size: 64;
+	margin: 25;
+	vertical-align: bottom;
+	horizontal-align: right;
+	android-elevation: 10;
+}
+
+.layout {
+	padding: 10;
+
+	.book-card {
+		width: 192;
+		height: 312;
+		padding: 0;
+		margin: 5;
+
+		.book-title {
+			font-size: 20;
+			padding: 0;
+			margin: 0 5;
+		}
+
+		.book-author {
+			font-size: 16;
+			padding: 0;
+			margin: 0 5;
+		}
+
+		.book-cover {
+			margin: 5 0;
+		}
+
+		.star, .menu {
+			background-color: transparent;
+			padding: 0;
+			border-radius: 50%;
+			margin: 10;
+			vertical-align: bottom;
+			android-elevation: 0;
+		}
+
+		.star {
+			font-size: 32;
+			color: #ffea00;
+			width: 32;
+			height: 32;
+			horizontal-align: left;
+		}
+
+		.menu {
+			font-size: 24;
+			width: 32;
+			height: 32;
+			horizontal-align: right;
+		}
+	}
+}

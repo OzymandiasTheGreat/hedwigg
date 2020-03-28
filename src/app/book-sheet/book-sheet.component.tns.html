@@ -1,0 +1,18 @@
+<GridLayout class="layout" rows="auto, auto, auto, auto, 192, 56" columns="auto, *">
+	<Image row="0" col="0" rowSpan="4" class="mdi fallback-img" src="font://󰗚"></Image>
+	<ImageCacheIt row="0" col="0" rowSpan="4" class="mdi book-cover"
+		stretch="aspectFit" decodedWidth="128" decodedHeight="192"
+		[src]="book.cover"
+	></ImageCacheIt>
+	<Label row="0" col="1" class="book-title" [text]="book.title" textWrap="true"></Label>
+	<Label row="1" col="1" class="book-author" [text]="getBookAuthors(book)" textWrap="true"></Label>
+	<Label row="2" col="1" class="book-published" [text]="'Published: ' + getPublished(book)" textWrap="false"></Label>
+	<Label row="3" col="1" class="book-categories" [text]="getBookCategories(book)" textWrap="true"></Label>
+	<ScrollView row="4" col="0" colSpan="2">
+		<Label class="book-desc" [text]="book.content || book.summary" textWrap="true"></Label>
+	</ScrollView>
+	<StackLayout class="download-layout" row="5" col="0" colSpan="2" orientation="horizontal">
+		<ActivityIndicator class="spinner" [busy]="downloading"></ActivityIndicator>
+		<Button #button class="-primary download-button" [text]="downloadSample ? 'Preview' : 'Download'" (tap)="download(button)"></Button>
+	</StackLayout>
+</GridLayout>

@@ -1,0 +1,9 @@
+<GridLayout class="layout" rows="auto, *">
+	<SegmentedBar row="0" class="tabs" [visibility]="showTabs ? 'visible' : 'collapsed'" [items]="tabs" selectedIndex="0" (selectedIndexChange)="onTabSelected($event)" ></SegmentedBar>
+
+	<ScrollView row="1">
+		<Label class="content" [text]="blurb" textWrap="true"></Label>
+	</ScrollView>
+
+	<ActivityIndicator row="1" class="spinner" [busy]="loading"></ActivityIndicator>
+</GridLayout>

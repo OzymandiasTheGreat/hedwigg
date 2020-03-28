@@ -1,0 +1,56 @@
+.layout {
+	padding: 10;
+
+	.book-cover, .fallback-img {
+		width: 128;
+		height: 192;
+		margin-right: 15;
+		vertical-align: top;
+	}
+
+	.fallback-img {
+		font-size: 192;
+	}
+
+	.book-title {
+		font-size: 20;
+		font-weight: bold;
+	}
+
+	.book-author {
+		font-size: 18;
+		font-weight: 200;
+	}
+
+	.book-published {
+		font-size: 16;
+	}
+
+	.book-categories {
+		font-size: 16;
+		font-weight: 200;
+	}
+
+	.book-desc {
+		font-size: 18;
+		margin: 15 0;
+	}
+
+	.download-layout {
+		margin-bottom: 10;
+		vertical-align: bottom;
+		horizontal-align: right;
+
+		.spinner {
+			width: 48;
+			height: 48;
+			margin: 5;
+			vertical-align: center;
+		}
+
+		.download-button {
+			width: 96;
+			height: 56;
+		}
+	}
+}

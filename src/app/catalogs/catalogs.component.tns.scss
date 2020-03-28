@@ -1,1 +1,38 @@
-/* Add mobile styles for the component here.  */
+.add-button {
+	width: 70;
+	height: 70;
+	font-size: 64;
+	margin: 25;
+	vertical-align: bottom;
+	horizontal-align: right;
+	android-elevation: 10;
+}
+
+.feed {
+	padding: 10;
+
+	.feed-icon {
+		font-size: 64;
+		width: 74;
+		height: 74;
+		padding: 5;
+		margin: 0;
+		margin-right: 15;
+	}
+
+	.feed-name {
+		font-size: 20;
+	}
+
+	.feed-link {
+		font-size: 16;
+	}
+
+	.menu-button {
+		font-size: 24;
+		width: 32;
+		height: 32;
+		border-radius: 50%;
+		android-elevation: 0;
+	}
+}

@@ -1,1 +1,17 @@
-<Button text="library works!" class="btn btn-primary"></Button>
+<GridLayout class="wrapper" rows="*">
+	<RadListView row="0" class="layout" [items]="books" height="100%">
+		<ListViewGridLayout tkListViewLayout scrollDirection="Vertical" [spanCount]="columns"></ListViewGridLayout>
+		<ng-template tkListItemTemplate let-book="item">
+			<CardView class="book-card" ripple="true">
+				<GridLayout rows="32, 24, 256">
+					<Label row="0" class="book-title" [text]="book.title" textWrap="false" [nsRouterLink]="['/reader']" [queryParams]="{ path: book.path }"></Label>
+					<Label row="1" class="book-author" [text]="book.author" textWrap="false" [nsRouterLink]="['/reader']" [queryParams]="{ path: book.path }"></Label>
+					<Image row="2" class="book-cover" [src]="book.cover" stretch="aspectFit" [nsRouterLink]="['/reader']" [queryParams]="{ path: book.path }"></Image>
+					<Button row="2" class="mdi star" [text]="book.starred ? '󰓎' : '󰓒'" (tap)="star(book)"></Button>
+					<Button row="2" #menu class="mdi menu" text="󰇙" (tap)="openMenu(book, menu)"></Button>
+				</GridLayout>
+			</CardView>
+		</ng-template>
+	</RadListView>
+	<FAB row="0" class="mdi open-button" text="󰂽" (tap)="openBook()"></FAB>
+</GridLayout>

@@ -32,7 +32,7 @@ export class Layout implements OnInit, OnDestroy {
 		this.router.events
 			.subscribe((event) => {
 				if (event instanceof NavigationEnd) {
-					this.activeLink = this.navlinks.find((link) => this.router.isActive(link.link, true));
+					this.activeLink = this.navlinks.find((link) => this.router.isActive(link.link, true)) || this.activeLink;
 				}
 			});
 	}
