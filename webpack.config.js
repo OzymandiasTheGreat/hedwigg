@@ -296,6 +296,7 @@ module.exports = env => {
             new webpack.DefinePlugin({
                 "global.TNS_WEBPACK": "true",
                 "process": "global.process",
+                "GTRANSLATE_API_KEY": JSON.stringify(env.GTRANSLATE_API_KEY),
             }),
             // Remove all files from the out dir.
             new CleanWebpackPlugin(itemsToClean, { verbose: !!verbose }),

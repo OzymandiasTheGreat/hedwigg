@@ -9,5 +9,8 @@ export default {
 		new CopyPlugin([
 			{ from: "app/webview/*", to: "src/", ignore: ["**/tns/*", "*.tns.*"], },
 		]),
+		new webpack.DefinePlugin({
+			GTRANSLATE_API_KEY: JSON.stringify(process.env.GTRANSLATE_API_KEY),
+		}),
 	],
 } as webpack.Configuration;

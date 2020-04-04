@@ -8,8 +8,11 @@ import { LANGUAGES, ILanguage } from "@src/app/services/settings.service.base";
 import { SettingsService } from "@src/app/services/settings.service";
 
 
+declare const GTRANSLATE_API_KEY: string;
+
+
 translate.engine = "google";
-translate.key = "AIzaSyASq-d5V0KnmFX172gyA04xTXApVxgR50c";
+translate.key = GTRANSLATE_API_KEY;
 
 
 @Component({

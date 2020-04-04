@@ -15,7 +15,7 @@
 				</a>
 			</mat-card-actions>
 			<mat-menu #bookMenu="matMenu" overlapTrigger="true" yPosition="above" xPosition="before">
-				<button mat-menu-item (click)="book.finished ? unmarkFinished(book) : markFinished(book)">{{ book.finished ? 'Mark as Reading' : 'Mark as Finished' }}</button>
+				<button mat-menu-item (click)="toggleFinished(book)">{{ book.finished ? 'Mark as Reading' : 'Mark as Finished' }}</button>
 				<button mat-menu-item (click)="menuRemove(book)">Remove from Library</button>
 				<button mat-menu-item (click)="menuUnlink(book)">Delete from disk</button>
 			</mat-menu>

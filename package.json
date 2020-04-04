@@ -13,9 +13,9 @@
     "electron": "wait-on http://localhost:4213/ && npm run electron:tsc && electron . --serve",
     "electron:tsc": "tsc -p tsconfig.electron.json",
     "tns": "tns",
-    "tns:android": "tns run android",
+    "tns:android": "bnr tns:android",
     "ng": "ng",
-    "serve": "ng serve",
+    "serve": "bnr serve",
     "start": "npm-run-all -p -r --silent build:webview:epub build:webview:pdf serve electron",
     "start:android": "npm-run-all -p -r build:webview:tns:epub build:webview:tns:pdf tns:android",
     "start:ios": "tns run ios",
@@ -29,6 +29,8 @@
     "dist:android": "bnr dist:android"
   },
   "betterScripts": {
+    "serve": "ng serve",
+    "tns:android": "tns run android --env.GTRANSLATE_API_KEY=\"$GTRANSLATE_API_KEY\"",
     "dist:android": "tns deploy android --key-store-path \"$JKS_PATH\" --key-store-password \"$JKS_PASS\" --key-store-alias \"$JKS_ALIAS\" --key-store-alias-password \"$JKS_PASS\" --clean --release --env.aot --env.snapshot"
   },
   "dependencies": {
@@ -105,6 +107,10 @@
   "build": {
     "appId": "tk.ozymandias.hedwigg",
     "productName": "Hedwigg",
+    "fileAssociations": [
+      { "ext": "epub" },
+      { "ext": "pdf" }
+    ],
     "win": {
       "icon": "build_resources/icons/windows.ico"
     },
