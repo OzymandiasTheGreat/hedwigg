@@ -1,12 +1,11 @@
 import { OnInit, OnDestroy } from "@angular/core";
 import { NavigationEnd } from "@angular/router";
-import { RouterExtensions } from "nativescript-angular/router";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 
 export class Layout implements OnInit, OnDestroy {
-	private ngUnsubscribe: Subject<void>;
+	protected ngUnsubscribe: Subject<void>;
 
 	public activeLink: { title: string, link: string, icon: string, iconClass: string };
 	public navlinks: Array<{ title: string, link: string, icon: string, iconClass: string }> = [
@@ -30,6 +29,7 @@ export class Layout implements OnInit, OnDestroy {
 	public ngOnInit() {
 		this.activeLink = this.navlinks.find((link) => this.router.isActive(link.link, true));
 		this.router.events
+			.pipe(takeUntil(this.ngUnsubscribe))
 			.subscribe((event) => {
 				if (event instanceof NavigationEnd) {
 					this.activeLink = this.navlinks.find((link) => this.router.isActive(link.link, true)) || this.activeLink;

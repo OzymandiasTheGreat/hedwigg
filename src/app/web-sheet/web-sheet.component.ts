@@ -1,5 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { BottomSheetParams, BottomSheetService, BottomSheetOptions } from "nativescript-material-bottomsheet/angular";
+import { Component, Inject } from "@angular/core";
+import { MAT_BOTTOM_SHEET_DATA, MatBottomSheet } from "@angular/material/bottom-sheet";
 
 import { WebResultsComponent } from "@src/app/web-results/web-results.component";
 
@@ -9,26 +9,20 @@ import { WebResultsComponent } from "@src/app/web-results/web-results.component"
 	templateUrl: "./web-sheet.component.html",
 	styleUrls: ["./web-sheet.component.scss"],
 })
-export class WebSheetComponent implements OnInit {
+export class WebSheetComponent {
 
 	constructor(
-		private params: BottomSheetParams,
-		private sheets: BottomSheetService,
+		@Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
+		private sheet: MatBottomSheet,
 	) { }
-
-	public ngOnInit() { }
 
 	public onTap(provider: string) {
 		setTimeout(() => {
-			const options: BottomSheetOptions = {
-				viewContainerRef: this.params.context.vcRef,
-				animated: true,
-				dismissOnBackgroundTap: true,
-				dismissOnDraggingDownSheet: false,
-				context: { provider, query: this.params.context.selection, lang: this.params.context.lang },
-			};
-			this.sheets.show(WebResultsComponent, options);
+			this.sheet.open(WebResultsComponent, { data: {
+				provider,
+				query: this.data.selection,
+				lang: this.data.lang,
+			} });
 		}, 50);
-		this.params.closeCallback();
 	}
 }

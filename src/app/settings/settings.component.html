@@ -1,1 +1,51 @@
-<p>settings works!</p>
+<div class="layout">
+	<div class="section">
+		<p>Flow</p>
+		<div class="horizontal-layout">
+			<button mat-stroked-button
+				[color]="settings.prefs.flow === 'paginated' ? 'primary' : 'transparent'"
+				[ngClass]="{active: settings.prefs.flow === 'paginated'}"
+				(click)="setFlow('paginated')"
+			>Paginated</button>
+			<button mat-stroked-button
+				[color]="settings.prefs.flow === 'spread' ? 'primary' : 'transparent'"
+				[ngClass]="{active: settings.prefs.flow === 'spread'}"
+				(click)="setFlow('spread')"
+			>Spread</button>
+			<button mat-stroked-button
+				[color]="settings.prefs.flow === 'scrolled' ? 'primary' : 'transparent'"
+				[ngClass]="{active: settings.prefs.flow === 'scrolled'}"
+				(click)="setFlow('scrolled')"
+			>Scrolled</button>
+		</div>
+	</div>
+
+	<div class="section">
+		<p>Reader Theme</p>
+		<div class="horizontal-layout">
+			<button *ngFor="let theme of themes" mat-fab
+				[ngClass]="{active: settings.prefs.theme === theme[0]}"
+				[ngStyle]="{'background-color': theme[1]['html, body']['background-color'], color: theme[1]['html, body'].color}"
+				(click)="setTheme(theme[0])"
+			>{{ theme[0] }}</button>
+		</div>
+	</div>
+
+	<div class="section">
+		<p>Font Size</p>
+		<mat-slider min="75" max="200" [value]="fontSize" (input)="setFontSize($event.value)" thumbLabel [displayWith]="fontSizeLabel"></mat-slider>
+	</div>
+
+	<div class="section">
+		<p>Web Lookup Language</p>
+		<button mat-stroked-button (click)="selectLang()">{{ language }}</button>
+	</div>
+
+	<div class="section">
+		<p>App Theme</p>
+		<div class="horizontal-layout">
+			<button mat-stroked-button [ngClass]="{active: settings.prefs.appTheme === 'Light'}" (click)="setAppTheme('Light')">Light</button>
+			<button mat-stroked-button [ngClass]="{active: settings.prefs.appTheme === 'Dark'}" (click)="setAppTheme('Dark')">Dark</button>
+		</div>
+	</div>
+</div>

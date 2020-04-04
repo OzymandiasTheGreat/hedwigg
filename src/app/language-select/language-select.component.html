@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Select Language</h1>
+<div mat-dialog-content>
+	<p>This will be used for web lookups</p>
+</div>
+<mat-action-list class="lang-list">
+	<button mat-list-item *ngFor="let lang of data.languages" [mat-dialog-close]="lang">{{ lang.name }}</button>
+</mat-action-list>
+<div mat-dialog-actions>
+	<button mat-button (click)="dialogRef.close()">Cancel</button>
+</div>

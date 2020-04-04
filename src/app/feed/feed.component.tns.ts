@@ -1,5 +1,5 @@
 import { Component, OnInit, NgZone, ViewContainerRef } from "@angular/core";
-import { ActivatedRoute, NavigationStart } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
 import { Frame } from "tns-core-modules/ui/frame";
 import { Page } from "tns-core-modules/ui/page";

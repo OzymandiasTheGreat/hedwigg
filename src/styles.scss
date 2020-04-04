@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming';
+@import "./theme";
+
+
+@include mat-core();
+$hedwigg-theme: mat-light-theme($hedwigg-primary, $hedwigg-accent, $hedwigg-warn);
+@include angular-material-theme($hedwigg-theme);
+
+$hedwigg-dark-theme:   mat-dark-theme($hedwigg-primary, $hedwigg-accent, $hedwigg-warn);
+.hedwigg-dark-theme {
+	@include angular-material-theme($hedwigg-dark-theme);
+}
+
+
+html, body {
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}

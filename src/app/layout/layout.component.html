@@ -1,1 +1,30 @@
-<p>layout works!</p>
+<mat-sidenav-container class="layout-container">
+	<mat-sidenav #sidebar mode="over">
+		<div>
+			<img class="logo" src="../../assets/icons/hedwigg.svg" alt="logo">
+			<div class="logo-text">Hedwigg</div>
+		</div>
+		<mat-nav-list>
+			<mat-list-item *ngFor="let link of navlinks">
+				<a matLine class="navlink" [routerLink]="[link.link]" routerLinkActive="active">
+					<mat-icon [fontIcon]="link.iconClass"></mat-icon>
+					<span>{{ link.title }}</span>
+				</a>
+			</mat-list-item>
+		  </mat-nav-list>
+	</mat-sidenav>
+
+	<mat-sidenav-content>
+		<mat-toolbar class="toolbar" color="primary">
+			<mat-toolbar-row class="toolbar-row">
+				<mat-icon fontIcon="mdi-menu" class="menu-icon" (click)="sidebar.toggle()"></mat-icon>
+				<mat-icon *ngIf="historyStack" fontIcon="mdi-keyboard-backspace" class="menu-icon" (click)="goBack()"></mat-icon>
+				<div class="title">{{ activeLink.title }}</div>
+			</mat-toolbar-row>
+		</mat-toolbar>
+
+		<div class="outlet-wrapper">
+			<router-outlet></router-outlet>
+		</div>
+	</mat-sidenav-content>
+</mat-sidenav-container>

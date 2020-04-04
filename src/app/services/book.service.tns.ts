@@ -2,11 +2,11 @@ import { Injectable } from "@angular/core";
 import * as settings from "tns-core-modules/application-settings";
 import * as fs from "tns-core-modules/file-system";
 
-import { BookServiceBase, IBookBase } from "@src/app/services/book.service.base";
+import { BookServiceBase } from "@src/app/services/book.service.base";
 
 
-// tslint:disable-next-line:no-empty-interface
-export interface IBook extends IBookBase {}
+export * from "@src/app/services/book.service.base";
+
 
 @Injectable({
 	providedIn: "root"

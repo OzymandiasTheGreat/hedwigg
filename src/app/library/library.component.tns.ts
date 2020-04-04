@@ -10,7 +10,7 @@ import { takeUntil, toArray } from "rxjs/operators";
 import { Mediafilepicker, FilePickerOptions } from "nativescript-mediafilepicker";
 import { Menu } from "nativescript-menu";
 
-import { IBookBase } from "@src/app/services/book.service.base";
+import { IBook } from "@src/app/services/book.service.base";
 import { BookService } from "@src/app/services/book.service";
 
 
@@ -24,7 +24,7 @@ export class LibraryComponent implements OnInit, OnDestroy {
 	private filePicker: Mediafilepicker;
 
 	public columns: number;
-	public books: IBookBase[] = [];
+	public books: IBook[] = [];
 
 	constructor(
 		private router: RouterExtensions,
@@ -80,27 +80,27 @@ export class LibraryComponent implements OnInit, OnDestroy {
 		this.bookService.getAllBooks();
 	}
 
-	public star(book: IBookBase) {
+	public star(book: IBook) {
 		book.starred = !book.starred;
 		this.bookService.setBook(book);
 	}
 
-	public toggleFinished(book: IBookBase) {
+	public toggleFinished(book: IBook) {
 		book.finished = !book.finished;
 		this.bookService.setBook(book);
 	}
 
-	public remove(book: IBookBase) {
+	public remove(book: IBook) {
 		this.bookService.removeBook(book);
 		this.books.splice(this.books.findIndex((b) => b.id === book.id), 1);
 	}
 
-	public unlink(book: IBookBase) {
+	public unlink(book: IBook) {
 		this.bookService.deleteBook(book);
 		this.books.splice(this.books.findIndex((b) => b.id === book.id), 1);
 	}
 
-	public openMenu(book: IBookBase, button: Button) {
+	public openMenu(book: IBook, button: Button) {
 		const actions = [
 			{ id: "finished", title: book.finished ? "Mark as Reading" : "Mark as Finished" },
 			{ id: "remove", title: "Remove from Library" },

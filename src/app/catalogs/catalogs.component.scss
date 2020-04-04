@@ -1,0 +1,91 @@
+@import "../../styles.scss";
+
+.layout {
+	height: 100%;
+
+	.mat-list {
+		width: 80%;
+		max-width: 600px;
+		height: 100%;
+		overflow: auto;
+		margin: 0 auto;
+		box-sizing: border-box;
+
+		.feed {
+			width: calc(100% - 2px);
+			border-bottom: 1px solid mat-color($hedwigg-primary, default-contrast);
+			border-left: 1px solid mat-color($hedwigg-primary, default-contrast);
+			border-right: 1px solid mat-color($hedwigg-primary, default-contrast);
+			border-radius: 5px;
+
+			&:first-child {
+				border-top: 1px solid mat-color($hedwigg-primary, default-contrast);
+			}
+
+			.feed-icon {
+				font-size: 64px;
+				line-height: 64px;
+				width: 72px;
+				height: 72px;
+				vertical-align: top;
+				box-sizing: border-box;
+			}
+
+			.feed-name {
+				font-size: 18px;
+				font-weight: bold;
+				width: 100%;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			.second-line {
+				display: flex;
+				flex-flow: row nowrap;
+				justify-content: space-between;
+				align-items: center;
+
+				.feed-link {
+					font-size: 16px;
+					font-weight: normal;
+					width: 90%;
+					white-space: nowrap;
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
+
+				.feed-menu {
+					font-size: 32px;
+					width: 32px;
+					height: 32px;
+
+					.mat-icon {
+						line-height: 32px;
+						width: 32px;
+						height: 32px;
+						vertical-align: top;
+					}
+				}
+			}
+		}
+	}
+
+	.add-button {
+		position: fixed;
+		bottom: 25px;
+		right: 25px;
+
+		::ng-deep .mat-button-wrapper {
+			padding: 12px;
+
+			mat-icon {
+				font-size: 32px;
+				line-height: 32px;
+				width: 32px;
+				height: 32px;
+				vertical-align: middle;
+			}
+		}
+	}
+}

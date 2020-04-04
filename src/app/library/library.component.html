@@ -1,1 +1,28 @@
-<p>library works!</p>
+<div class="layout">
+	<virtual-scroller #scroll class="scroll" [items]="books">
+		<mat-card class="book-card" *ngFor="let book of scroll.viewPortItems">
+			<mat-card-header [routerLink]="['/reader']" [queryParams]="{ path: book.path }">
+				<mat-card-title class="book-title">{{ book.title }}</mat-card-title>
+				<mat-card-subtitle class="book-author">{{ book.author }}</mat-card-subtitle>
+			</mat-card-header>
+			<img mat-card-image class="book-cover" [src]="book.cover" alt="book cover" [routerLink]="['/reader']" [queryParams]="{ path: book.path }">
+			<mat-card-actions>
+				<a mat-icon-button class="star" (click)="star(book)">
+					<mat-icon [fontIcon]="book.starred ? 'mdi-star' : 'mdi-star-outline'"></mat-icon>
+				</a>
+				<a mat-icon-button class="menu" [matMenuTriggerFor]="bookMenu">
+					<mat-icon fontIcon="mdi-dots-vertical"></mat-icon>
+				</a>
+			</mat-card-actions>
+			<mat-menu #bookMenu="matMenu" overlapTrigger="true" yPosition="above" xPosition="before">
+				<button mat-menu-item (click)="book.finished ? unmarkFinished(book) : markFinished(book)">{{ book.finished ? 'Mark as Reading' : 'Mark as Finished' }}</button>
+				<button mat-menu-item (click)="menuRemove(book)">Remove from Library</button>
+				<button mat-menu-item (click)="menuUnlink(book)">Delete from disk</button>
+			</mat-menu>
+		</mat-card>
+	</virtual-scroller>
+
+	<a mat-fab color="primary" class="open-button" (click)="openBook()">
+		<mat-icon fontIcon="mdi-book-open-variant"></mat-icon>
+	</a>
+</div>

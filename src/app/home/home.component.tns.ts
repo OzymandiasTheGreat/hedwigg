@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, NgZone } from "@angular/core";
 import { RouterExtensions } from "nativescript-angular/router";
 import { Page } from "tns-core-modules/ui/page";
 import { Button } from "tns-core-modules/ui/button";
+import { confirm } from "tns-core-modules/ui/dialogs";
 import { Subject } from "rxjs";
 import { takeUntil, toArray } from "rxjs/operators";
 import { Mediafilepicker, FilePickerOptions } from "nativescript-mediafilepicker";
@@ -116,10 +117,30 @@ export class HomeComponent implements OnInit, OnDestroy {
 					}
 					break;
 				case "remove":
-					this.remove(book);
+					confirm({
+						title: "Remove Book from Library",
+						message: "This will remove the Book from Library, but it will remain on disk.\nYou can add it again later.",
+						okButtonText: "Remove",
+						cancelable: true,
+					})
+					.then((remove) => {
+						if (remove) {
+							this.remove(book);
+						}
+					});
 					break;
 				case "delete":
-					this.unlink(book);
+					confirm({
+						title: "Delete Book from disk",
+						message: "This will delete the book from disk and remove it from Library.\nYou will have to download it again.",
+						okButtonText: "Delete",
+						cancelable: true,
+					})
+					.then((unlink) => {
+						if (unlink) {
+							this.unlink(book);
+						}
+					});
 			}
 		});
 	}

@@ -1,9 +1,6 @@
-// tslint:disable:prefer-mapped-imports
-
-import { Book, Contents } from "epubjs";
-import Rendition, { Location } from "epubjs/types/rendition";
-
-// import { IBookBase } from "../services/book.service.base";
+import { ipcRenderer } from "electron";
+import { Book, Rendition, Contents } from "epubjs";
+import { Location } from "epubjs/types/rendition";
 
 
 const THEMES = {
@@ -35,32 +32,27 @@ const THEMES = {
 };
 
 
-const wvInterface = (<any> window).nsWebViewInterface;
-const ePub = (<any> window).ePub;
-
 let path: string;
-let META = false;
 let book: Book;
 let rendition: Rendition;
 let locGen: boolean;
+let META = false;
 let SWIPE: boolean;
 let BOTTOMTOP: number;
 let EVENTTIME: number;
 
 
-wvInterface.on("FILEPATH", (options: { filePath: string, flow: string, spread: string, theme: string, fontSize: string }) => {
+ipcRenderer.on("FILEPATH", (evt, options: { filePath: string, flow: string, spread: string, theme: string, fontSize: string }) => {
 	path = options.filePath;
-	book = ePub(options.filePath);
+	book = new Book(options.filePath);
 	SWIPE = options.flow !== "scrolled";
 	rendition = book.renderTo("renderArea", {
 		width: "100%",
 		height: "100%",
-		// This is broken: font-size is not applied and screen goes blank on resize
-		// method: "continuous",
 		flow: options.flow,
 		spread: options.spread,
 		minSpreadWidth: 0,
-	} as any);
+	});
 
 	rendition.themes.register(THEMES);
 	rendition.themes.default({ "html, body": { height: "100%" } });
@@ -68,14 +60,14 @@ wvInterface.on("FILEPATH", (options: { filePath: string, flow: string, spread: s
 	rendition.themes.fontSize(options.fontSize);
 
 	book.ready.then(() => {
-		wvInterface.emit("BOOKID", `BOOK(${book.key()})`);
-		wvInterface.emit("TOC", book.navigation.toc.map((navItem) => ({ ...navItem, key: "TOC" })));
+		ipcRenderer.sendToHost("BOOKID", `BOOK(${book.key()})`);
+		ipcRenderer.sendToHost("TOC", book.navigation.toc.map((navItem) => ({ ...navItem, key: "TOC" })));
 		(<Promise<void>> book.locations.generate(1024))
 			.then(() => {
 				locGen = true;
 				rendition.location
 				&& rendition.location.start
-				&& wvInterface.emit("PERCENT", book.locations.percentageFromCfi(rendition.location.start.cfi));
+				&& ipcRenderer.sendToHost("PERCENT", book.locations.percentageFromCfi(rendition.location.start.cfi));
 			});
 	});
 	rendition.on("relocated", (data: Location) => {
@@ -103,52 +95,58 @@ wvInterface.on("FILEPATH", (options: { filePath: string, flow: string, spread: s
 						starred: false,
 						bookmarks: [],
 					};
-					wvInterface.emit("META", ibook);
+					ipcRenderer.sendToHost("META", ibook);
 				});
 		}
-		wvInterface.emit("CFI", data.start.cfi);
+		ipcRenderer.sendToHost("CFI", data.start.cfi);
 
 		const spineItem = book.spine.get(data.start.cfi);
 		const navItem = book.navigation.get(spineItem.href);
-		wvInterface.emit("CHAPTER", {
+		ipcRenderer.sendToHost("CHAPTER", {
 			label: navItem ? navItem.label.trim() : "-",
 			current: data.end.displayed.page,
 			total: data.end.displayed.total,
 		});
 		if (locGen) {
-			wvInterface.emit("PERCENT", book.locations.percentageFromCfi(data.start.cfi));
+			ipcRenderer.sendToHost("PERCENT", book.locations.percentageFromCfi(data.start.cfi));
 		}
 	});
-	// rendition.on("selected", (range: EpubCFI, contents: Contents) => {
-	// 	// tslint:disable-next-line:newline-per-chained-call
-	// 	wvInterface.emit("debug", `SELECTED ${contents.window.getSelection().toString()}`);
-	// });
+
 	rendition.hooks.content.register((contents: Contents) => {
+		contents.document.documentElement.addEventListener("click", () => {
+			setTimeout(() => {
+				const selection = contents.window.getSelection();
+				if (!selection || !selection.toString()) {
+					ipcRenderer.sendToHost("FULLSCREEN", null);
+				}
+			}, 100);
+		});
 		contents.document.addEventListener("selectstart", () => {
 			setTimeout(() => {
 				const selection = contents.window.getSelection();
 				if (!selection || !selection.toString()) {
-					wvInterface.emit("SELECTION", { selected: false, selection: null });
+					ipcRenderer.sendToHost("SELECTION", { selected: false, selection: null });
 				}
 			}, 100);
 		});
 		contents.document.addEventListener("selectionchange", () => {
 			const selection = contents.window.getSelection();
 			if (selection) {
-				wvInterface.emit("SELECTION", { selected: true, selection: selection.toString() });
+				ipcRenderer.sendToHost("SELECTION", { selected: true, selection: selection.toString() });
 			}
 		});
+
 		if (!SWIPE) {
 			const container = document.querySelector(".epub-container");
 			BOTTOMTOP = container.scrollHeight - container.clientHeight - 1;
 			EVENTTIME = performance.now();
 			container.addEventListener("scroll", (event) => {
-				if (event.isTrusted && (event.timeStamp - EVENTTIME) > 250) {
+				if (event.isTrusted && (event.timeStamp - EVENTTIME) > 750) {
 					BOTTOMTOP = container.scrollHeight - container.clientHeight - 1;
 					if (container.scrollTop <= 0) {
 						EVENTTIME = event.timeStamp;
 						rendition.prev();
-					} else if (container.scrollTop >= (BOTTOMTOP)) {
+					} else if (container.scrollTop >= BOTTOMTOP) {
 						EVENTTIME = event.timeStamp;
 						rendition.next();
 					}
@@ -157,41 +155,51 @@ wvInterface.on("FILEPATH", (options: { filePath: string, flow: string, spread: s
 		}
 	});
 });
-wvInterface.on("CFI", (location: string) => {
+
+ipcRenderer.on("CFI", (evt, location: string) => {
 	rendition && rendition.display(location);
 });
-wvInterface.on("PERCENT", (percent) => {
+ipcRenderer.on("PERCENT", (evt, percent) => {
 	if (locGen) {
 		const cfi = book.locations.cfiFromPercentage(percent);
 		rendition && rendition.display(cfi);
 	}
 });
-wvInterface.on("META", () => {
+ipcRenderer.on("META", () => {
 	META = true;
 	rendition && rendition.display();
 });
-wvInterface.on("PAGE", (direction) => {
-	if (rendition) {
-		if (SWIPE) {
-			switch (direction) {
-				case "LEFT":
-					(<any> book.packaging.metadata).direction === "rtl" ? rendition.prev() : rendition.next();
-					break;
-				case "RIGHT":
-					(<any> book.packaging.metadata).direction === "rtl" ? rendition.next() : rendition.prev();
-			}
+ipcRenderer.on("PAGE", (evt, direction) => {
+	if (rendition && SWIPE) {
+		switch (direction) {
+			case "LEFT":
+				(<any> book.packaging.metadata).direction === "rtl" ? rendition.next() : rendition.prev();
+				break;
+			case "RIGHT":
+				(<any> book.packaging.metadata).direction === "rtl" ? rendition.prev() : rendition.next();
 		}
 	}
 });
-wvInterface.on("SEARCH", async (query) => {
+
+ipcRenderer.on("SEARCH", async (evt, query) => {
 	const results = await Promise.all(
 		(<any> book.spine).spineItems.map((item) => item.load(book.load.bind(book))
 			.then(item.find.bind(item, query))
 			.finally(item.unload.bind(item)))
 	)
 	.then((res) => Promise.resolve([].concat.apply([], res)));
-	wvInterface.emit("SEARCH", { query, results });
+	ipcRenderer.sendToHost("SEARCH", { query, results });
 	results.forEach((res: { excerpt: string, cfi: string }) => {
 		rendition.annotations.highlight(res.cfi);
 	});
+});
+
+
+document.documentElement.addEventListener("click", () => {
+	setTimeout(() => {
+		const selection = window.getSelection();
+		if (!selection || !selection.toString()) {
+			ipcRenderer.sendToHost("FULLSCREEN", null);
+		}
+	}, 100);
 });

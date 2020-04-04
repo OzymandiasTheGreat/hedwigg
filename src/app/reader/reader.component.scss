@@ -1,0 +1,146 @@
+.toolbar {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+
+	.toolbar-left, .toolbar-right {
+		.title {
+			display: inline-block;
+			font-size: 24px;
+			font-weight: bold;
+			line-height: 48px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			width: calc(100% - 48px - 25px);
+			height: 48px;
+			margin-left: 25px;
+			vertical-align: top;
+		}
+
+		a.mat-icon-button, mat-icon {
+			font-size: 32px;
+			line-height: 48px;
+			text-align: center;
+			width: 48px;
+			height: 48px;
+			vertical-align: middle;
+		}
+	}
+
+	.toolbar-left {
+		width: calc(100% - 288px);
+	}
+
+	.toolbar-right {
+		width: 288px;
+		text-align: right;
+		mat-icon {
+			box-sizing: border-box;
+		}
+
+		mat-form-field {
+			.mat-icon {
+				font-size: 16px;
+			}
+
+			.mat-label {
+				margin: 0 15px;
+			}
+		}
+	}
+}
+
+.content {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: stretch;
+	align-items: stretch;
+
+	.layout {
+		position: relative;
+		flex: 1 0 auto;
+
+		webview {
+			height: 100%;
+		}
+
+		.page-button {
+			position: absolute;
+			top: 0;
+			font-size: 64px;
+			width: 64px;
+			opacity: 0.3;
+			cursor: pointer;
+
+			mat-icon {
+				color: #cfd8dc;
+
+				&::before {
+					line-height: calc(90vh - 64px - 90px);
+					vertical-align: middle;
+				}
+			}
+
+			&:hover {
+				opacity: 0.75;
+			}
+		}
+
+		#left {
+			left: 0;
+		}
+
+		#right {
+			right: 0;
+		}
+	}
+
+	.bottom-bar {
+
+		mat-toolbar-row {
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.chapter {
+			font-size: 20px;
+			line-height: 32px;
+			vertical-align: middle;
+		}
+
+		.settings {
+			font-size: 24px;
+			line-height: 32px;
+			vertical-align: middle;
+		}
+
+		mat-slider {
+			width: 100%;
+		}
+	}
+}
+
+.drawer {
+	::ng-deep .mat-tab-label {
+		.mat-icon {
+			font-size: 24px;
+			line-height: 24px;
+			vertical-align: middle;
+			margin-right: 10px;
+		}
+
+		span {
+			font-size: 16px;
+			line-height: 24px;
+			vertical-align: middle;
+		}
+	}
+}
+
+mat-sidenav-container {
+	height: 100%;
+}

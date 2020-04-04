@@ -1,1 +1,9 @@
-<p>search-results works!</p>
+<h1 mat-dialog-title>
+	<mat-icon fontIcon="mdi-magnify"></mat-icon>
+	<span>{{ data.query }}</span>
+</h1>
+<div mat-dialog-content>
+	<mat-nav-list>
+		<a mat-list-item *ngFor="let result of data.results; let i = index" class="result" (click)="dialogRef.close(result.cfi)"> {{ i + 1 + '. ' + result.excerpt }} </a>
+	</mat-nav-list>
+</div>

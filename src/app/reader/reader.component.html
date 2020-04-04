@@ -1,1 +1,83 @@
-<p>reader works!</p>
+<mat-sidenav-container>
+	<mat-sidenav #drawer class="drawer" mode="side">
+		<mat-tab-group class="side-tabs">
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<mat-icon fontIcon="mdi-table-of-contents"></mat-icon>
+					<span>Table of Contents</span>
+				</ng-template>
+				<mat-nav-list>
+					<ng-container *ngFor="let item of toc">
+						<a mat-list-item *ngIf="item.key === 'TOC'" class="toc-label" (click)="navigateTOC(item.href)"> {{ item.label.trim() }} </a>
+						<a mat-list-item *ngIf="item.key === 'OUTLINE'" class="toc-label" (click)="navigateOutline(item.dest)"> {{ item.title }} </a>
+					</ng-container>
+				 </mat-nav-list>
+			</mat-tab>
+			<mat-tab>
+				<ng-template mat-tab-label>
+					<mat-icon fontIcon="mdi-bookmark-multiple"></mat-icon>
+					<span>Bookmarks</span>
+				</ng-template>
+				<mat-nav-list>
+					<a *ngFor="let bookmark of (book ? book.bookmarks : [])" class="toc-label" (click)="navigateTOC(bookmark.cfi)">{{ bookmark.label }}</a>
+				</mat-nav-list>
+			</mat-tab>
+		</mat-tab-group>
+	</mat-sidenav>
+
+	<mat-sidenav-content class="content">
+		<mat-toolbar *ngIf="!fullscreen" class="toolbar" color="primary">
+			<div class="toolbar-left">
+				<a mat-icon-button (click)="drawer.toggle()">
+					<mat-icon fontIcon="mdi-table-of-contents"></mat-icon>
+				</a>
+				<span class="title">{{ book ? book.title : bookPath.split('/').pop() }}</span>
+			</div>
+			<div class="toolbar-right">
+				<a mat-icon-button *ngIf="!searching" (click)="bookmark()">
+					<mat-icon [fontIcon]="bookmarked ? 'mdi-bookmark' : 'mdi-bookmark-outline'"></mat-icon>
+				</a>
+				<a mat-icon-button *ngIf="!searching" (click)="search()">
+					<mat-icon fontIcon="mdi-magnify"></mat-icon>
+				</a>
+				<mat-form-field *ngIf="searching">
+					<mat-label>Search...</mat-label>
+					<input #searchbar matInput type="text" (keydown)="onSearchSubmit($event, searchbar)">
+					<button mat-icon-button matPrefix (click)="onSearchSubmit(null, searchbar)">
+						<mat-icon fontIcon="mdi-magnify"></mat-icon>
+					</button>
+					<button mat-icon-button matSuffix (click)="onSearchClear(searchbar)">
+						<mat-icon fontIcon="mdi-close"></mat-icon>
+					</button>
+				</mat-form-field>
+				<a mat-icon-button [routerLink]="['/home']">
+					<mat-icon fontIcon="mdi-close"></mat-icon>
+				</a>
+			</div>
+		</mat-toolbar>
+
+		<div class="layout" [ngStyle]="{ 'background-color': background }">
+			<webview #webview nodeintegration disablewebsecurity></webview>
+			<a *ngIf="dirButtons" id="left" class="page-button" (click)="pageEvent('LEFT')"><mat-icon fontIcon="mdi-chevron-left"></mat-icon></a>
+			<a *ngIf="dirButtons" id="right" class="page-button" (click)="pageEvent('RIGHT')"><mat-icon fontIcon="mdi-chevron-right"></mat-icon></a>
+		</div>
+
+		<mat-toolbar *ngIf="!fullscreen" class="bottom-bar">
+			<mat-toolbar-row>
+				<span class="chapter">{{ chapter.label + '   -   ' + chapter.current + '/' + chapter.total }}</span>
+				<a mat-icon-button class="settings" [routerLink]="['/settings']"><mat-icon fontIcon="mdi-cog"></mat-icon></a>
+			</mat-toolbar-row>
+
+			<mat-toolbar-row>
+				<mat-slider
+					thumbLabel
+					[displayWith]="pageSliderLabel"
+					min="1"
+					max="1000"
+					[value]="pageSliderValue * 1000"
+					(input)="onPageSliderValueChange($event.value / 1000)"
+				></mat-slider>
+			</mat-toolbar-row>
+		</mat-toolbar>
+	</mat-sidenav-content>
+</mat-sidenav-container>

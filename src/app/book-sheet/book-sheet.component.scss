@@ -1,0 +1,57 @@
+.info {
+	.book-cover {
+		width: 128px;
+		height: 192px;
+		object-fit: contain;
+		float: left;
+		margin: 0;
+		margin-right: 25px;
+		margin-bottom: 25px;
+	}
+
+	.book-title {
+		font-size: 20px;
+		font-weight: bold;
+	}
+
+	.book-author {
+		font-size: 18px;
+		font-weight: 200;
+	}
+
+	.book-published {
+		font-size: 16px;
+	}
+
+	.book-categories {
+		font-size: 16px;
+		font-weight: 200;
+	}
+}
+
+br {
+	clear: both;
+}
+
+.blurb {
+	.book-desc {
+		font-size: 18px;
+	}
+}
+
+.actions {
+	float: right;
+
+	mat-spinner {
+		display: inline-block;
+		width: 32px !important;
+		height: 32px !important;
+		margin: 0 15px;
+		margin-bottom: -10px;
+
+		::ng-deep svg {
+			width: 32px !important;
+			height: 32px !important;
+		}
+	}
+}

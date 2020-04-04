@@ -1,0 +1,102 @@
+.layout {
+	position: relative;
+	height: calc(100% - 56px);
+
+	.category-label {
+		font-size: 20px;
+		font-weight: bold;
+		margin: 10px 25px;
+	}
+
+	virtual-scroller {
+		height: 380px;
+	}
+
+	.book-card {
+		position: relative;
+		height: 340px;
+		width: 192px;
+		padding: 0;
+		margin: 10px;
+
+		.mat-card-header {
+			padding: 0;
+			margin: 0;
+			cursor: pointer;
+
+			::ng-deep .mat-card-header-text {
+				padding: 0;
+				margin: 0;
+			}
+		}
+
+		.book-title {
+			font-size: 18px;
+			font-weight: bold;
+			width: calc(192px - 30px);
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			margin: 5px 15px;
+		}
+
+		.book-author {
+			font-size: 16px;
+			font-weight: normal;
+			width: calc(192px - 30px);
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			margin: 5px 15px;
+		}
+
+		.book-cover {
+			width: 192px;
+			height: 290px;
+			margin: 0;
+			cursor: pointer;
+		}
+
+		mat-card-actions {
+			position: absolute;
+			bottom: 0;
+			margin: 0;
+			width: 100%;
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: space-between;
+			align-items: flex-end;
+
+			.star {
+				font-size: 32px;
+				color: #ffea00;
+				width: 48px;
+				height: 48px;
+			}
+
+			.menu {
+				font-size: 32px;
+				width: 48px;
+				height: 48px;
+			}
+		}
+	}
+
+	.open-button {
+		position: fixed;
+		bottom: 25px;
+		right: 25px;
+
+		::ng-deep .mat-button-wrapper {
+			padding: 12px;
+
+			mat-icon {
+				font-size: 32px;
+				line-height: 32px;
+				width: 32px;
+				height: 32px;
+				vertical-align: middle;
+			}
+		}
+	}
+}

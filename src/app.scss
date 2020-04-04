@@ -1,5 +1,7 @@
-@import "~@nativescript/theme/css/core.css";
-@import "~@nativescript/theme/css/blue.css";
+@import "~@nativescript/theme/core";
+@import "./theme";
+@import '~@nativescript/theme/index';
+
 
 .mdi {
 	font-family: "Material Design Icons", "materialdesignicons", "materialdesignicons-webfont";

@@ -1,7 +1,5 @@
-import { Component } from "@angular/core";
-import * as platform from "tns-core-modules/platform";
-import { SegmentedBarItem } from "tns-core-modules/ui/segmented-bar";
-import { BottomSheetParams } from "nativescript-material-bottomsheet/angular";
+import { Component, Inject } from "@angular/core";
+import { MAT_BOTTOM_SHEET_DATA } from "@angular/material/bottom-sheet";
 import wtype from "wtf_wikipedia";
 import wtf from "wtf_wikipedia/builds/wtf_wikipedia-client";
 import translate from "translate";
@@ -23,22 +21,22 @@ export class WebResultsComponent {
 	public languages: ILanguage[] = [];
 	public loading = true;
 	public content: string[] = [];
-	public tabs: SegmentedBarItem[] = [];
+	public tabs: string[] = [];
 	public blurb = "";
 	public showTabs: boolean;
 
 	constructor(
-		private params: BottomSheetParams,
+		@Inject(MAT_BOTTOM_SHEET_DATA) private data: any,
 		private settings: SettingsService,
 	) {
-		let deviceLang = platform.device.language;
+		let deviceLang = navigator.language;
 		if (deviceLang.includes("-")) {
 			// tslint:disable-next-line:newline-per-chained-call
 			deviceLang = deviceLang.split("-").shift();
 		}
 		const defaultLang = LANGUAGES.find((lang) => lang.code === deviceLang);
 		const preferLang = this.settings.prefs.webLang;
-		const bookLang = LANGUAGES.find((lang) => lang.code === this.params.context.lang);
+		const bookLang = LANGUAGES.find((lang) => lang.code === this.data.lang);
 
 		for (const lang of [preferLang, defaultLang, bookLang]) {
 			if (lang && this.languages.findIndex((l) => l.code === lang.code) <= -1) {
@@ -47,28 +45,26 @@ export class WebResultsComponent {
 		}
 
 		for (const lang of this.languages) {
-			const item = new SegmentedBarItem();
-			item.title = lang.name;
-			this.tabs.push(item);
+			this.tabs.push(lang.name);
 		}
 
-		switch (this.params.context.provider) {
+		switch (this.data.provider) {
 			case "wikipedia":
-				this.wikipedia(this.params.context.query)
+				this.wikipedia(this.data.query)
 					.then(() => {
 						this.loading = false;
 						this.showTabs = true;
 					});
 				break;
 			case "wiktionary":
-				this.wiktionary(this.params.context.query)
+				this.wiktionary(this.data.query)
 					.then(() => {
 						this.loading = false;
 						this.showTabs = true;
 					});
 				break;
 			case "gtranslate":
-				this.gtranslate(this.params.context.query)
+				this.gtranslate(this.data.query)
 					.then(() => {
 						this.loading = false;
 						this.showTabs = false;
@@ -77,7 +73,7 @@ export class WebResultsComponent {
 	}
 
 	public onTabSelected(data) {
-		this.blurb = this.content[data.value];
+		this.blurb = this.content[data];
 	}
 
 	private async gtranslate(query): Promise<void> {

@@ -1,1 +1,21 @@
-<p>catalogs works!</p>
+<div class="layout">
+	<mat-list>
+		<mat-list-item *ngFor="let catalog of catalogs" class="feed" [routerLink]="['/feed', catalog.id]">
+			<mat-icon mat-list-icon class="feed-icon" fontIcon="mdi-rss-box"></mat-icon>
+			<div mat-line class="first-line feed-name">{{ catalog.name }}</div>
+			<div mat-line class="second-line">
+				<span class="feed-link">{{ catalog.url }}</span>
+				<button mat-icon-button class="feed-menu" [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
+					<mat-icon fontIcon="mdi-dots-vertical"></mat-icon>
+				</button>
+			</div>
+			<mat-menu #menu="matMenu">
+				<button mat-menu-item (click)="edit(catalog)">Edit</button>
+				<button mat-menu-item (click)="remove(catalog)">Remove</button>
+			</mat-menu>
+		</mat-list-item>
+	</mat-list>
+	<a mat-fab color="primary" class="add-button" (click)="edit(null)">
+		<mat-icon fontIcon="mdi-rss"></mat-icon>
+	</a>
+</div>

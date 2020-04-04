@@ -1,0 +1,22 @@
+@import "~@angular/material/theming";
+
+
+// @angular/material palette
+$hedwigg-primary:          mat-palette($mat-indigo, 900, 600, 900);
+$hedwigg-accent:           mat-palette($mat-pink, A200, A100, A400);
+$hedwigg-warn:             mat-palette($mat-red);
+
+
+// {N} palette
+$background:               mat-color($mat-light-theme-background, background);
+$primary:                  $dark-primary-text;
+$secondary:                $dark-secondary-text;
+$background-dark:          mat-color($mat-dark-theme-background, background);
+$primary-dark:             $light-primary-text;
+$secondary-dark:           $light-secondary-text;
+$accent:                   mat-color($hedwigg-accent);
+$accent-dark:              mat-color($hedwigg-accent, darker);
+$complementary:            mat-color($hedwigg-primary);
+$complementary-color:      mat-color($hedwigg-primary, default-contrast);
+$complementary-dark:       mat-color($hedwigg-primary, darker);
+$complementary-color-dark: mat-color($hedwigg-primary, darker-contrast);

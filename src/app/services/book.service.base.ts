@@ -2,7 +2,7 @@ import { Observable, Subject } from "rxjs";
 import {} from "rxjs/operators";
 
 
-export interface IBookBase {
+export interface IBook {
 	id: string;
 	path: string;
 	cover: string;
@@ -18,8 +18,8 @@ export interface IBookBase {
 
 
 export class BookServiceBase {
-	private bookStream: Subject<IBookBase>;
-	public books: Observable<IBookBase>;
+	private bookStream: Subject<IBook>;
+	public books: Observable<IBook>;
 
 	constructor(
 		protected getAllKeys: () => string[],
@@ -29,24 +29,24 @@ export class BookServiceBase {
 		protected exists: (path: string) => boolean,
 		protected remove: (path: string) => void,
 	) {
-		this.bookStream = new Subject<IBookBase>();
+		this.bookStream = new Subject<IBook>();
 		this.books = this.bookStream.asObservable();
 	}
 
-	public getBook(id: string): IBookBase {
+	public getBook(id: string): IBook {
 		const bookStr = this.getItem(id);
 		return bookStr && JSON.parse(bookStr);
 	}
 
-	public setBook(book: IBookBase): void {
+	public setBook(book: IBook): void {
 		this.setItem(book.id, JSON.stringify(book));
 	}
 
-	public removeBook(book: IBookBase): void {
+	public removeBook(book: IBook): void {
 		this.delItem(book.id);
 	}
 
-	public deleteBook(book: IBookBase): void {
+	public deleteBook(book: IBook): void {
 		this.delItem(book.id);
 		this.remove(book.path);
 	}
@@ -54,14 +54,14 @@ export class BookServiceBase {
 	public getAllBooks(): void {
 		for (const key of this.getAllKeys()) {
 			if (key.startsWith("BOOK")) {
-				const book: IBookBase = JSON.parse(this.getItem(key));
+				const book: IBook = JSON.parse(this.getItem(key));
 				if (this.exists(book.path)) {
 					this.bookStream.next(book);
 				}
 			}
 		}
 		this.bookStream.complete();
-		this.bookStream = new Subject<IBookBase>();
+		this.bookStream = new Subject<IBook>();
 		this.books = this.bookStream.asObservable();
 	}
 }

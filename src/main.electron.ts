@@ -13,8 +13,10 @@ function createWindow(): BrowserWindow {
 		width: 800,
 		height: 600,
 		webPreferences: {
+			webviewTag: true,
 			nodeIntegration: true,
 			allowRunningInsecureContent: (serve) ? true : false,
+			webSecurity: false,
 		},
 	});
 
@@ -22,7 +24,7 @@ function createWindow(): BrowserWindow {
 		MAIN_WINDOW.loadURL("http://localhost:4213");
 	} else {
 		MAIN_WINDOW.loadURL(url.format({
-			pathname: path.join(__dirname, "index.html"),
+			pathname: path.join(app.getAppPath(), "index.html"),
 			protocol: "file:",
 			slashes: true,
 		}));

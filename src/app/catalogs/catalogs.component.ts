@@ -1,15 +1,12 @@
-import { Component, OnInit, OnDestroy, ViewContainerRef } from "@angular/core";
-import { ModalDialogService, ModalDialogOptions } from "nativescript-angular/modal-dialog";
-import { Page } from "tns-core-modules/ui/page";
-import { Button } from "tns-core-modules/ui/button";
-import { confirm } from "tns-core-modules/ui/dialogs";
-import { Subject } from "rxjs";
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { Subject, pipe } from "rxjs";
 import { takeUntil, toArray } from "rxjs/operators";
-import { Menu } from "nativescript-menu";
 
 import { ICatalog } from "@src/app/services/catalog.service.base";
 import { CatalogService } from "@src/app/services/catalog.service";
 import { CatalogFormComponent } from "@src/app/catalog-form/catalog-form.component";
+import { WarningDialogComponent } from "@src/app/warning-dialog/warning-dialog.component";
 
 
 @Component({
@@ -23,12 +20,9 @@ export class CatalogsComponent implements OnInit, OnDestroy {
 	public catalogs: ICatalog[];
 
 	constructor(
-		private page: Page,
-		private modalService: ModalDialogService,
-		private vcRef: ViewContainerRef,
+		private dialog: MatDialog,
 		private catalogService: CatalogService,
 	) {
-		this.page.actionBarHidden = true;
 		this.ngUnsubscribe = new Subject<void>();
 	}
 
@@ -51,17 +45,10 @@ export class CatalogsComponent implements OnInit, OnDestroy {
 	}
 
 	public edit(catalog: ICatalog) {
-		const options: ModalDialogOptions = {
-			viewContainerRef: this.vcRef,
-			animated: true,
-			cancelable: true,
-			fullscreen: false,
-			stretched: false,
-			context: { catalog },
-		};
-
-		this.modalService.showModal(CatalogFormComponent, options)
-			.then((cat: ICatalog) => {
+		this.dialog.open(CatalogFormComponent, { data: catalog })
+			.afterClosed()
+			.pipe(takeUntil(this.ngUnsubscribe))
+			.subscribe((cat: ICatalog) => {
 				if (cat) {
 					this.catalogService.setCatalog(cat);
 					this.load();
@@ -69,35 +56,20 @@ export class CatalogsComponent implements OnInit, OnDestroy {
 			});
 	}
 
-	public openMenu(catalog: ICatalog, button: Button) {
-		const actions = [
-			{ id: "edit", title: "Edit" },
-			{ id: "delete", title: "Remove" },
-		];
-
-		Menu.popup({
-			view: button,
-			actions,
+	public remove(catalog: ICatalog) {
+		this.dialog.open(WarningDialogComponent, {
+			data: {
+				title: "Remove Catalog",
+				content: "This will permanently remove the catalog.\nBooks downloaded from this catalog will not be affected.",
+				action: "Remove",
+			},
 		})
-		.then((action) => {
-			switch (action.id) {
-				case "edit":
-					this.edit(catalog);
-					break;
-				case "delete":
-					confirm({
-						title: "Remove Catalog",
-						message: "This will permanently remove the catalog.\nBooks downloaded from this catalog will not be affected.",
-						cancelable: true,
-						cancelButtonText: "Cancel",
-						okButtonText: "Remove",
-					})
-					.then((remove) => {
-						if (remove) {
-							this.catalogService.removeCatalog(catalog);
-							this.load();
-						}
-					});
+		.afterClosed()
+		.pipe(takeUntil(this.ngUnsubscribe))
+		.subscribe((remove) => {
+			if (remove) {
+				this.catalogService.removeCatalog(catalog);
+				this.load();
 			}
 		});
 	}

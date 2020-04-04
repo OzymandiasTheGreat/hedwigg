@@ -1,1 +1,20 @@
-<p>book-sheet works!</p>
+<div class="layout">
+	<div class="info">
+		<img class="book-cover" [src]="book.cover">
+		<p class="book-title">{{ book.title }}</p>
+		<p class="book-author">{{ getBookAuthors(book) }}</p>
+		<p class="book-published">Published: {{ getPublished(book) }}</p>
+		<p class="book-categories">{{ getBookCategories(book) }}</p>
+	</div>
+	<br>
+	<div class="blurb">
+		<p class="book-desc">{{ book.content || book.summary }}</p>
+	</div>
+	<div class="actions">
+		<mat-spinner *ngIf="downloading"></mat-spinner>
+		<button mat-raised-button color="accent" [matMenuTriggerFor]="menu">{{ downloadSample ? 'Preview' : 'Download' }}</button>
+	</div>
+	<mat-menu #menu="matMenu">
+		<button mat-menu-item *ngFor="let link of downloadLinks" (click)="download(link.link)">{{ link.type }}</button>
+	</mat-menu>
+</div>

@@ -1,1 +1,13 @@
-<p>web-results works!</p>
+<div class="layout">
+	<ng-container *ngIf="showTabs">
+		<mat-tab-group mat-align-tabs="center" class="tabs">
+			<mat-tab *ngFor="let tab of tabs" [label]="tab" (selectedIndexChange)="onTabSelected($event)">
+				<div class="blurb">{{ blurb }}</div>
+			</mat-tab>
+		</mat-tab-group>
+	</ng-container>
+	<ng-container *ngIf="!showTabs">
+		<div class="blurb">{{ blurb }}</div>
+	</ng-container>
+	<mat-spinner *ngIf="loading"></mat-spinner>
+</div>

@@ -99,7 +99,7 @@ export class ReaderComponent implements AfterViewInit, OnDestroy {
 
 		this.wvInterface = new WebViewInterface(
 			webView,
-			fs.path.join(fs.knownFolders.currentApp().path, `app/webview/reader.${this.epub ? "epub" : "pdf"}.tns.html`)
+			fs.path.join(fs.knownFolders.currentApp().path, `app/webview/tns/reader.${this.epub ? "epub" : "pdf"}.tns.html`)
 		);
 		// And this somehow break WebViewInterface... FFS
 		// webView.android.setWebViewClient(new HedwiggWebViewClient());

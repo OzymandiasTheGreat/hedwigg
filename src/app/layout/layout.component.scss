@@ -1,0 +1,57 @@
+.layout-container {
+	position: relative;
+	height: 100%;
+
+	.logo {
+		width: 192px;
+	}
+
+	.logo-text {
+		font-size: 24px;
+		font-weight: bold;
+		margin-left: 15px;
+	}
+
+	.navlink {
+		mat-icon {
+			font-size: 24px;
+			margin-right: 15px;
+		}
+
+		span {
+			font-size: 18px;
+		}
+	}
+
+	.toolbar {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 1000;
+		height: 56px;
+		box-sizing: border-box;
+
+		.menu-icon {
+			font-size: 32px;
+			line-height: 32px;
+			height: 32px;
+			margin-right: 15px;
+			vertical-align: middle;
+			cursor: pointer;
+		}
+
+		.title {
+			font-size: 24px;
+			font-weight: bold;
+			line-height: 32px;
+			height: 32px;
+			vertical-align: middle;
+		}
+	}
+
+	.outlet-wrapper {
+		margin-top: 64px;
+		height: calc(100% - 64px);
+	}
+}

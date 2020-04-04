@@ -1,0 +1,32 @@
+@import "../../styles.scss";
+
+
+.active {
+	border: 1px solid mat-color($hedwigg-primary) !important;
+}
+
+.layout {
+	width: 80%;
+	max-width: 600px;
+	margin: auto;
+
+	.section {
+		margin-bottom: 25px;
+
+		p {
+			font-size: 20px;
+			font-weight: bold;
+		}
+
+		.horizontal-layout {
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.mat-slider {
+			width: 100%;
+		}
+	}
+}

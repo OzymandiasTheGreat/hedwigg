@@ -1,1 +1,23 @@
-<p>feed works!</p>
+<div class="layout">
+	<mat-list>
+		<virtual-scroller #scroll class="scroll" [items]="feed.entries" (vsEnd)="nextPage($event)">
+			<ng-container *ngIf="feedType === 'navigation'">
+				<mat-list-item *ngFor="let entry of scroll.viewPortItems" class="nav-card" [routerLink]="['./']" [queryParams]="{ feed: getEntryLink(entry) }">
+					<mat-icon matListIcon class="nav-img" fontIcon="mdi-bookshelf"></mat-icon>
+					<p matLine class="nav-title">{{ entry.title }}</p>
+					<p matLine class="nav-desc">{{ entry.content || entry.summary }}</p>
+				</mat-list-item>
+			</ng-container>
+
+			<ng-container *ngIf="feedType === 'acquisition'">
+				<mat-list-item *ngFor="let entry of scroll.viewPortItems" class="book-card" (click)="openDetails(entry)">
+					<img matListAvatar class="book-cover" [src]="images[entry.id]">
+					<p matLine class="book-title">{{ entry.title }}</p>
+					<p matLine class="book-author">{{ getEntryAuthors(entry) }}</p>
+					<p matLine class="book-desc">{{ entry.content || entry.summary }}</p>
+				</mat-list-item>
+			</ng-container>
+		</virtual-scroller>
+	</mat-list>
+	<mat-spinner *ngIf="loading"></mat-spinner>
+</div>
