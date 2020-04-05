@@ -1,27 +1,30 @@
 # Hedwigg
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.25.
+This is a simple, yet elegant ebook reader.
 
-## Development server
+The primary intention behind this project is reading books that are not in
+your native tongue.
+As such Hedwigg includes web lookups for Wikipedia, Wiktionary and Google Translate.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+While Hedwigg includes basic library management functions, it's only meant to manage books you
+download from OPDS catalogs, such as FeedBooks or personal library served with Calibre server.
 
-## Code scaffolding
+Hedwigg is in active development, as such there may be bugs and new features are in the works.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+You know what they say, a picture speaks a thousand words, so here are some screenshots.
 
-## Build
+![Epub book with Table of Contents open](./screenshots/book-epub.png)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+![Pdf book with interface (chrome) brought up](./screenshots/book-pdf.png)
 
-## Running unit tests
+![Home page](./screenshots/home.png)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+![Settings (modified)](./screenshots/settings.png)
 
-## Running end-to-end tests
+![Catalogs page with FeedBooks added](./screenshots/catalogs.png)
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+![Browsing the OPDS feed](./screenshots/opds-feed.png)
 
-## Further help
+## Acknowledgments
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Hedwigg is powered by [epub.js](http://futurepress.org/) and [pdf.js](https://mozilla.github.io/pdf.js/)
