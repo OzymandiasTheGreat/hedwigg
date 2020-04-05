@@ -1,14 +1,13 @@
 {
   "name": "hedwigg",
-  "version": "0.1.0-a0",
+  "version": "0.1.0",
   "author": {
     "name": "Ozymandias (Tomas Ravinskas)",
     "email": "tomas.rav@gmail.com"
   },
-  "description": "A simple, cross-platform E-Book reader",
+  "description": "A simple and elegant, cross-platform, ebook reader inspired by Google Play Books on Android",
   "license": "MIT",
   "main": "dist/main.electron.js",
-  "private": true,
   "scripts": {
     "electron": "wait-on http://localhost:4213/ && npm run electron:tsc && electron . --serve",
     "electron:tsc": "tsc -p tsconfig.electron.json",
@@ -112,10 +111,10 @@
       { "ext": "pdf" }
     ],
     "win": {
-      "icon": "build_resources/icons/windows.ico"
+      "icon": "build_resources/windows.ico"
     },
     "linux": {
-      "icon": "build_resources/icons/linux"
+      "icon": "build_resources/linux"
     },
     "files": [
       "dist/main.electron.js",

@@ -10,12 +10,9 @@ let MAIN_WINDOW: BrowserWindow = null;
 
 function createWindow(): BrowserWindow {
 	MAIN_WINDOW = new BrowserWindow({
-		width: 800,
-		height: 600,
 		webPreferences: {
 			webviewTag: true,
 			nodeIntegration: true,
-			allowRunningInsecureContent: (serve) ? true : false,
 			webSecurity: false,
 		},
 	});
@@ -23,6 +20,8 @@ function createWindow(): BrowserWindow {
 	if (serve) {
 		MAIN_WINDOW.loadURL("http://localhost:4213");
 	} else {
+		MAIN_WINDOW.setIcon(path.join(app.getAppPath(), "assets/icons/hedwigg.png"));
+		MAIN_WINDOW.removeMenu();
 		MAIN_WINDOW.loadURL(url.format({
 			pathname: path.join(app.getAppPath(), "index.html"),
 			protocol: "file:",
