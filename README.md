@@ -1,5 +1,11 @@
 # Hedwigg
 
+-------------------
+
+If you find this software useful, [consider becoming a patron](https://www.patreon.com/ozymandias)
+
+-------------------
+
 This is a simple, yet elegant ebook reader.
 
 The primary intention behind this project is reading books that are not in
