@@ -23,7 +23,7 @@ const { app } = remote;
 	styleUrls: ["./reader.component.scss"]
 })
 export class ReaderComponent implements OnInit, AfterViewInit {
-	@ViewChild("webview", { static: false }) private webview: ElementRef<WebviewTag>;
+	@ViewChild("webview") private webview: ElementRef<WebviewTag>;
 	private selectionTime: number;
 
 	public fullscreen = true;

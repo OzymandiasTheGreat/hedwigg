@@ -118,7 +118,6 @@
       true,
       "allow-fast-null-checks"
     ],
-    "no-unused-variable": false,
     "no-var-keyword": true,
     "prefer-conditional-expression": [
       true,
