@@ -30,7 +30,7 @@
   "betterScripts": {
     "serve": "ng serve",
     "tns:android": "tns run android --env.GTRANSLATE_API_KEY=\"$GTRANSLATE_API_KEY\"",
-    "dist:android": "tns deploy android --key-store-path \"$JKS_PATH\" --key-store-password \"$JKS_PASS\" --key-store-alias \"$JKS_ALIAS\" --key-store-alias-password \"$JKS_PASS\" --clean --release --env.aot --env.snapshot"
+    "dist:android": "tns build android --key-store-path \"$JKS_PATH\" --key-store-password \"$JKS_PASS\" --key-store-alias \"$JKS_ALIAS\" --key-store-alias-password \"$JKS_PASS\" --clean --release --env.aot --env.snapshot --env.GTRANSLATE_API_KEY=\"$GTRANSLATE_API_KEY\" --copy-to dist/${npm_package_name}@${npm_package_version}.apk"
   },
   "dependencies": {
     "@angular/animations": "~8.2.14",
@@ -44,6 +44,7 @@
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
     "@mdi/font": "^5.0.45",
+    "@nativescript/core": "^7.0.13",
     "@nativescript/theme": "~2.2.1",
     "@nstudio/nativescript-cardview": "^1.0.0",
     "@nstudio/nativescript-floatingactionbutton": "^2.0.0",
@@ -52,7 +53,6 @@
     "hammerjs": "^2.0.8",
     "jszip": "^3.2.2",
     "mkdirp": "^1.0.3",
-    "nativescript-angular": "~8.20.0",
     "nativescript-downloader": "^2.1.5",
     "nativescript-image-cache-it": "^5.0.0-beta.14",
     "nativescript-material-bottomsheet": "^3.1.14",
@@ -68,12 +68,12 @@
     "pdfjs-dist": "^2.3.200",
     "reflect-metadata": "~0.1.12",
     "rxjs": "~6.4.0",
-    "tns-core-modules": "~6.3.0",
     "translate": "^1.1.2",
     "tslib": "^1.10.0",
     "url-parse": "^1.4.7",
     "wtf_wikipedia": "^8.0.0",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.9.1",
+    "@nativescript/angular": "10.0.0"
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "^8.4.1",
@@ -95,20 +95,25 @@
     "codelyzer": "^5.0.0",
     "electron": "^8.1.1",
     "electron-builder": "^22.4.1",
-    "nativescript-dev-webpack": "~1.4.0",
     "npm-run-all": "^4.1.5",
     "rxjs-tslint-rules": "^4.29.1",
+    "tns-android": "^7.0.1",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.5.3",
-    "wait-on": "^4.0.1"
+    "typescript": "3.9.7",
+    "wait-on": "^4.0.1",
+    "@nativescript/webpack": "~3.0.0"
   },
   "build": {
     "appId": "tk.ozymandias.hedwigg",
     "productName": "Hedwigg",
     "fileAssociations": [
-      { "ext": "epub" },
-      { "ext": "pdf" }
+      {
+        "ext": "epub"
+      },
+      {
+        "ext": "pdf"
+      }
     ],
     "win": {
       "icon": "build_resources/windows.ico"
@@ -123,11 +128,5 @@
         "to": "."
       }
     ]
-  },
-  "nativescript": {
-    "id": "tk.ozymandias.hedwigg",
-    "tns-android": {
-      "version": "6.4.1"
-    }
   }
 }

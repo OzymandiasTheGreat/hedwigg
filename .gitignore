@@ -50,3 +50,5 @@ testem.log
 Thumbs.db
 
 .env
+.migration_backup/
+.update_backup/
