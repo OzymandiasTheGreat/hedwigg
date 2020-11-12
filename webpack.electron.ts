@@ -6,9 +6,9 @@ import * as CopyPlugin from "copy-webpack-plugin";
 export default {
 	target: "electron-renderer",
 	plugins: [
-		new CopyPlugin([
-			{ from: "app/webview/*", to: "src/", ignore: ["**/tns/*", "*.tns.*"], },
-		]),
+		new CopyPlugin({ patterns: [
+			{ from: "src/app/webview/*", to: "./", globOptions: { ignore: ["**/tns/*", "*.tns.*"] } },
+		]}),
 		new webpack.DefinePlugin({
 			GTRANSLATE_API_KEY: JSON.stringify(process.env.GTRANSLATE_API_KEY),
 		}),

@@ -50,7 +50,15 @@
               "node_modules/@mdi/font/css/materialdesignicons.min.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "url-parse",
+              "@tweenjs/tween.js",
+              "mkdirp",
+              "content-disposition",
+              "opds-parser2",
+              "translate"
+            ]
           },
           "configurations": {
             "production": {
@@ -74,11 +82,6 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
                 }
               ]
             }

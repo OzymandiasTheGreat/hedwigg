@@ -10,7 +10,7 @@
     "module": "es2020",
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2017",
+    "target": "es2015",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -22,9 +22,6 @@
     ],
     "paths": {
       "@src/*": [
-        "src/*.android.ts",
-        "src/*.ios.ts",
-        "src/*.tns.ts",
         "src/*.web.ts",
         "src/*"
       ]
