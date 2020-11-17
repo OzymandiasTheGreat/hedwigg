@@ -1,10 +1,9 @@
-import { OnInit, OnDestroy, Directive } from "@angular/core";
+import { OnInit, OnDestroy } from "@angular/core";
 import { NavigationEnd } from "@angular/router";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 
-@Directive()
 export class Layout implements OnInit, OnDestroy {
 	protected ngUnsubscribe: Subject<void>;
 
